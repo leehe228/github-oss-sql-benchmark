@@ -1,0 +1,1 @@
+SELECT 1 AS "one" FROM container_repositories INNER JOIN (SELECT projects.id FROM projects WHERE projects.namespace_id IN (SELECT namespaces.id FROM namespaces WHERE namespaces.type = 'Group' AND namespaces.id = 9970) AND projects.container_registry_enabled = TRUE) projects ON projects.id = container_repositories.project_id LIMIT 1;

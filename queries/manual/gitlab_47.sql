@@ -1,0 +1,1 @@
+SELECT projects.* FROM projects INNER JOIN users_star_projects ON users_star_projects.project_id = projects.id WHERE projects.pending_delete = 'f' AND (EXISTS (SELECT 1 FROM project_authorizations WHERE project_authorizations.user_id = 1 AND (project_id = projects.id)) OR projects.visibility_level IN (20, 10)) AND users_star_projects.user_id = 1 ORDER BY projects.id DESC;

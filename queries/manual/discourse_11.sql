@@ -1,0 +1,1 @@
+SELECT * FROM posts INNER JOIN topics ON topics.id = posts.topic_id WHERE posts.id IN (SELECT p2.id FROM posts p2 LEFT JOIN post_search_data pd ON locale = '0' AND p2.id = pd.post_id WHERE pd.post_id IS NULL);

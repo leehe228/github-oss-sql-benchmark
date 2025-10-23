@@ -1,0 +1,1 @@
+SELECT ci_builds.* FROM ci_builds WHERE ci_builds.type IN ('Ci::Build') AND ci_builds.id IN (SELECT ci_builds.id FROM ci_builds WHERE artifacts_file <> '' UNION ALL SELECT ci_builds.id FROM ci_builds WHERE EXISTS (SELECT 1 FROM ci_job_artifacts WHERE ci_builds.id = ci_job_artifacts.job_id));

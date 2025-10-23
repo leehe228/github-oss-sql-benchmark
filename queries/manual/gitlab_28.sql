@@ -1,0 +1,1 @@
+SELECT COUNT(*) FROM (SELECT notes.id FROM notes WHERE notes.project_id = 13083 AND notes.noteable_id = 3985770 AND notes.noteable_type = 'MergeRequest' UNION SELECT notes.id FROM notes WHERE notes.project_id IN (13083, 13083) AND notes.noteable_type = 'Commit' AND notes.commit_id IN ('xxx')) subquery;

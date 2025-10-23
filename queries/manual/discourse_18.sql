@@ -1,0 +1,1 @@
+SELECT * FROM categories INNER JOIN topics ON categories.topic_id = topics.id WHERE categories.id IN (SELECT c2.id FROM categories c2 WHERE c2.parent_category_id = 1 UNION ALL SELECT 1) AND topics.id NOT IN (SELECT c3.topic_id FROM categories c3 WHERE c3.parent_category_id = 1);

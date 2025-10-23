@@ -1,0 +1,1 @@
+SELECT * FROM projects WHERE projects.id IN (select id FROM projects WHERE EXISTS (SELECT 1 FROM project_authorizations WHERE user_id = 7683 AND project_authorizations.project_id = projects.id) UNION select id FROM projects WHERE projects.visibility_level IN (1473811210));

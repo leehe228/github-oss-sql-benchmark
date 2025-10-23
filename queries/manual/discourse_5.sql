@@ -1,0 +1,1 @@
+SELECT * FROM posts WHERE id IN ((SELECT posts.id FROM posts WHERE posts.topic_id = 6020 AND post_number = 1) UNION (SELECT p1.id FROM posts p1 WHERE p1."percent_rank" <= 88.0 AND p1.topic_id = 7290));

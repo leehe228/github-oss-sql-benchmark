@@ -1,0 +1,1 @@
+SELECT merge_requests.* FROM merge_requests WHERE merge_requests.state_id IN (1) AND EXISTS (SELECT 1 FROM label_links INNER JOIN labels ON labels.id = label_links.label_id WHERE label_links.target_id = merge_requests.id AND label_links.target_type = 'MergeRequest' AND labels.title = 'bug') AND merge_requests.target_project_id = 13083 ORDER BY merge_requests.id DESC;

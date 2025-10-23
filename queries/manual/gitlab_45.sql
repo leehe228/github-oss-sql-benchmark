@@ -1,0 +1,1 @@
+SELECT note_diff_files.* FROM note_diff_files INNER JOIN notes ON notes.id = note_diff_files.diff_note_id AND notes.type IN ('DiffNote') WHERE notes.noteable_id = 18 AND notes.noteable_type = 'MergeRequest' OR notes.project_id IN (10, 10) AND notes.noteable_type = 'Commit' AND notes.commit_id IN (2044708959);

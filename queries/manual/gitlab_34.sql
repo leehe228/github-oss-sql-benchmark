@@ -1,0 +1,1 @@
+SELECT * FROM members WHERE members.source_id = 165620945 UNION select * from members WHERE requested_at IS NULL AND user_id NOT IN (select users.id from users INNER JOIN members ON users.id = members.user_id WHERE members.source_id = 1162172858);

@@ -1,0 +1,1 @@
+SELECT * FROM categories c WHERE NOT c.read_restricted IS TRUE AND NOT EXISTS (SELECT 1 FROM category_groups cg WHERE cg.category_id = c.id) OR EXISTS (SELECT 1 FROM category_groups cg WHERE permission_type IN (2081219153) AND cg.category_id = c.id AND group_id IN (SELECT g.group_id FROM group_users g where g.user_id = 1420));

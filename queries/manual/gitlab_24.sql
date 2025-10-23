@@ -1,0 +1,1 @@
+SELECT COUNT(*) FROM project_repository_states WHERE project_repository_states.repository_verification_checksum IS NOT NULL AND project_repository_states.last_repository_verification_failure IS NULL;

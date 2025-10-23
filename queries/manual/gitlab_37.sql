@@ -1,0 +1,1 @@
+SELECT COUNT(*) FROM ci_builds WHERE ci_builds.type IN ('Ci::Build') AND ci_builds.id = (SELECT max(other_builds.id) FROM ci_builds other_builds WHERE other_builds.type IN ('Ci::Build') AND other_builds.commit_id = ci_builds.commit_id AND other_builds.name = ci_builds.name) AND ci_builds.status IN ('failed', 'canceled') AND ci_builds.commit_id IN (8088);

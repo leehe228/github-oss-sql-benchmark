@@ -1,0 +1,1 @@
+SELECT * FROM posts LEFT JOIN topic_allowed_groups tg ON posts.topic_id = tg.topic_id WHERE tg.id IS NULL AND posts.topic_id IN (SELECT tau.topic_id FROM topic_allowed_users tau JOIN topic_allowed_users tau2 ON tau2.topic_id = tau.topic_id AND tau2.id != tau.id WHERE tau.user_id = 1086 GROUP BY tau.topic_id HAVING COUNT(*) = 1);
