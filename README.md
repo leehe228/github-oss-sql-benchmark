@@ -1,7 +1,26 @@
-# github-oss-sql-benchmark
-Github Open-source SQL Benchmark 
+# Github Open-Source-based SQL Benchmark (GOSSB)
 
-Including schemas for MS SQL Server for 7 databases, 3 types of queries (original queries with issues, queries manually optimized by human experts, queries optimized by Calcite) 
+This SQL query benchmark including schemas for MS SQL Server for 7 databases, 3 types of queries (original queries with issues, queries manually optimized by human experts, queries optimized by Calcite) 
+
+### Specification
+
+| Database | Number of relations | Total #attributes | Avg. #attribute | #q | #q (full) |
+|--|--|--|--|--|--|
+| [diaspora](https://github.com/diaspora/diaspora) | 49 | 375 | 7.65 | 1 | - |
+| [discoure](https://github.com/discourse/discourse) | 155 | 1378 | 8.89 | 15 | - |
+| [gitlab](https://gitlab.com/gitlab-org/gitlab) | 332 | 3141 | 9.46 | 25 | - |
+| [lobsters](https://github.com/lobsters/lobsters) | 22 | 178 | 8.09 | 2 | - |
+| [redmine](https://github.com/redmine/redmine) | 56 | 407 | 7.27 | 2 | - |
+| [solidus](https://github.com/solidusio/solidus) | 98 | 808 | 8.24 | 1 | - |
+| [spree](https://github.com/spree/spree) | 87 | 727 | 8.36 | 4 | - |
+
+*Full versions including 8000+ queries planned for release
+
+### Usage
+
+// 
+
+### Query Source
 
 | Query No. | Database (Repo) | Rewritting Type | Issue URL |
 |------|------------|------------------------------------|-------------|
