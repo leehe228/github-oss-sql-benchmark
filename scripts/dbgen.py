@@ -26,6 +26,7 @@ import networkx as nx
 import numpy as np
 import pandas as pd
 from faker import Faker
+import random
 
 fake = Faker()
 
@@ -327,7 +328,12 @@ class DBGenerator:
 
             # 5) random generation if needed
             if vals is None:
-                vals = [gen_value(dtype, eff_len) for _ in range(n_rows)]
+                # varbinary
+                if dtype.lower().startswith("varbinary"):
+                    # vals = [None for _ in range(n_rows)]
+                    vals = ["0x" + ''.join(random.choice('0123456789ABCDEF') for _ in range(16)) for _ in range(n_rows)]
+                else:
+                    vals = [gen_value(dtype, eff_len) for _ in range(n_rows)]
 
             # 6) NULL policy (default: no NULLs)
             if self.allow_nulls and nullable and not (is_pk or is_fk):
