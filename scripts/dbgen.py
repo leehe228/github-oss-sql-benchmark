@@ -195,13 +195,26 @@ def gen_value(dtype: str, max_chars=None):
     return coerce_string_len(fake.word(), max_chars)
 
 
+# def gen_unique(dtype: str, n_rows: int, max_chars=None):
+#     dt = dtype.lower()
+#     if is_integer_dtype(dt):
+#         return gen_unique_numeric(dt, n_rows).tolist()
+#     # Unique strings (UUID-based)
+#     return [coerce_string_len(uuid.uuid4().hex, max_chars if max_chars else 32) for _ in range(n_rows)]
+
 def gen_unique(dtype: str, n_rows: int, max_chars=None):
     dt = dtype.lower()
     if is_integer_dtype(dt):
         return gen_unique_numeric(dt, n_rows).tolist()
-    # Unique strings (UUID-based)
-    return [coerce_string_len(uuid.uuid4().hex, max_chars if max_chars else 32) for _ in range(n_rows)]
 
+    if "decimal" in dt or "numeric" in dt:
+        scale = parse_decimal_scale(dt, default_scale=3)
+        base = np.arange(1, n_rows + 1)
+        noise = np.random.random(n_rows)
+        vals = base + noise
+        return [round(v, scale) for v in vals]
+
+    return [coerce_string_len(uuid.uuid4().hex, max_chars if max_chars else 32) for _ in range(n_rows)]
 
 # -------------------------------
 # Row count heuristic (TPC-H-ish)
