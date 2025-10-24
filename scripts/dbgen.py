@@ -27,6 +27,7 @@ import numpy as np
 import pandas as pd
 from faker import Faker
 import random
+import uuid
 
 fake = Faker()
 
@@ -168,6 +169,9 @@ def gen_value(dtype: str, max_chars=None):
     # FLOAT/REAL
     if "float" in dt or "real" in dt:
         return round(np.random.random() * 1000, 3)
+    
+    if "uniqueidentifier" in dt:
+        return str(uuid.uuid4())
 
     # DATETIME family
     if "datetimeoffset" in dt:
@@ -330,18 +334,19 @@ class DBGenerator:
             if vals is None:
                 # varbinary
                 if dtype.lower().startswith("varbinary"):
-                    # vals = [None for _ in range(n_rows)]
-                    vals = ["0x" + ''.join(random.choice('0123456789ABCDEF') for _ in range(16)) for _ in range(n_rows)]
+                    vals = [None for _ in range(n_rows)]
+                    # vals = ["0x" + ''.join(random.choice('0123456789ABCDEF') for _ in range(16)) for _ in range(n_rows)]
                 else:
                     vals = [gen_value(dtype, eff_len) for _ in range(n_rows)]
 
-            # 6) NULL policy (default: no NULLs)
-            if self.allow_nulls and nullable and not (is_pk or is_fk):
-                # 10% NULLs for general nullable columns
-                mask = np.random.rand(n_rows) < 0.10
-                vals = [v if not m else None for v, m in zip(vals, mask)]
-            else:
-                vals = [v if v is not None else gen_value(dtype, eff_len) for v in vals]
+            if not dtype.lower().startswith("varbinary"):
+                # 6) NULL policy (default: no NULLs)
+                if self.allow_nulls and nullable and not (is_pk or is_fk):
+                    # 10% NULLs for general nullable columns
+                    mask = np.random.rand(n_rows) < 0.10
+                    vals = [v if not m else None for v, m in zip(vals, mask)]
+                else:
+                    vals = [v if v is not None else gen_value(dtype, eff_len) for v in vals]
 
             # 7) final string trim
             if any(isinstance(v, str) for v in vals) and is_char(dtype):
