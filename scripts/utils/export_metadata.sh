@@ -8,7 +8,6 @@ USER="SA"
 PASS="Password123@"
 SQLCMD="/opt/mssql-tools18/bin/sqlcmd"
 
-# 현재 스크립트의 실제 경로 계산
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 QUERY_FILE="${SCRIPT_DIR}/export_metadata.sql"
 OUTDIR="${SCRIPT_DIR}/../metadata_tsv"
@@ -18,11 +17,10 @@ mkdir -p "$OUTDIR"
 DBS=("diaspora" "discourse" "gitlab" "lobsters" "redmine" "solidus" "spree")
 
 for DB in "${DBS[@]}"; do
-    echo "📘 Exporting metadata for database: $DB"
+    echo "Exporting metadata for database: $DB"
 
     OUTFILE="${OUTDIR}/${DB}_metadata.tsv"
 
-    # extract_metadata.sql을 절대경로로 지정
     $SQLCMD -S "$SERVER" -U "$USER" -P "$PASS" -C -d "$DB" \
         -i "$QUERY_FILE" \
         -s "	" -W -h -1 -o "$OUTFILE"

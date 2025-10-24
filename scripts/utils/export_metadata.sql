@@ -1,11 +1,15 @@
 SET NOCOUNT ON;
 
--- 기본 컬럼/제약정보 추출
 SELECT
     t.name AS TABLE_NAME,
     c.name AS COLUMN_NAME,
     ty.name AS DATA_TYPE,
-    c.max_length AS MAX_LENGTH,
+    -- NVARCHAR/NCHAR은 max_length를 문자 수로 변환
+    CASE 
+        WHEN ty.name IN ('nvarchar', 'nchar') AND c.max_length > 0 THEN c.max_length / 2
+        WHEN ty.name IN ('nvarchar', 'nchar') AND c.max_length = -1 THEN 4000 -- nvarchar(max)
+        ELSE c.max_length
+    END AS MAX_LENGTH,
     CASE WHEN c.is_nullable = 1 THEN 'YES' ELSE 'NO' END AS IS_NULLABLE,
     dc.definition AS DEFAULT_VALUE,
     pk.CONSTRAINT_NAME AS PRIMARY_KEY,
